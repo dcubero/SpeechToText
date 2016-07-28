@@ -18,14 +18,14 @@ import javax.swing.filechooser.FileFilter;
 
 
 public class Main {
-	private static String claveApi = "AIzaSyDLk_2k9KfXf7WfqsoyLz7EFRJ4wcDjmpg";
+	private static String claveApi = "";
 	private static String request = "https://www.google.com/speech-api/v2/"
 			+ "recognize?xjerr=1&client=chromium&lang=es-ES&key=";
 	
 	
 	public static void main(String[] args) throws IOException {
 		
-		//Look and Feel del sistema
+		//System look&feel
 		 try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
@@ -34,13 +34,13 @@ public class Main {
 		
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-		FileFilter filtroFlac = new ExtensionFileFilter("Archivos .FLAC", new String [] {"flac"});
+		FileFilter filtroFlac = new ExtensionFileFilter("Files .FLAC", new String [] {"flac"});
 		fileChooser.setFileFilter(filtroFlac);
 		
-		int resultado = fileChooser.showOpenDialog(null);
+		int result = fileChooser.showOpenDialog(null);
 		
-		if (resultado == JFileChooser.CANCEL_OPTION){
-			System.out.println("No se ha seleccionado ningun archivo");
+		if (result == JFileChooser.CANCEL_OPTION){
+			System.out.println("No file has been selected");
 		}else{
 			System.out.println(fileChooser.getSelectedFile().toString());
 			
@@ -54,18 +54,18 @@ public class Main {
 			connection.setDoInput(true);
 			connection.setInstanceFollowRedirects(false);
 			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type", "audio/x-flac; rate=35000");
+			connection.setRequestProperty("Content-Type", "audio/x-flac; rate=44100");
 			connection.setRequestProperty("User-Agent", "speech2text"); 
 			connection.setConnectTimeout(60000);
 			connection.setUseCaches (false);
 			
 		       	
-			DataOutputStream wr = new DataOutputStream(connection.getOutputStream ());
-			wr.write(data);
-			wr.flush();
-			wr.close();
+			DataOutputStream writer = new DataOutputStream(connection.getOutputStream ());
+			writer.write(data);
+			writer.flush();
+			writer.close();
 
-			System.out.println("Enviado");
+			System.out.println("Sended\n");
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			
